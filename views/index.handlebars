@@ -23,9 +23,10 @@
         <div class="card mb-2">
           <img class="card-img-top" style="height: 200px;" src="{{ this.image }}" alt="Card image cap">
           <div class="card-body movie-item-body">
+            <div class="badge badge-danger index_rating float-right"><i class="fas fa-star mr-2"></i>{{ this.rating }}
+            </div>
             <h6 class="card-title">{{ this.name }}</h6>
             <div><i class="fas fa-utensils mr-2"></i>{{ this.category }}</div>
-            <div class="badge badge-danger"><i class="fas fa-star mr-2"></i>{{ this.rating }}</div>
           </div>
           <div class="card-footer">
             <a href="/restaurants/{{{this.id}}}/edit" class="btn btn-primary"><i class="fas fa-edit"></i></a>
