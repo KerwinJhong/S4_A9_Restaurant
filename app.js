@@ -9,7 +9,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true })
 
 const db = mongoose.connection
 
@@ -21,63 +21,88 @@ db.once('open', () => {
     console.log('mongodb connected!')
 })
 
-const Todo = require('./models/todo')
+const Restaurant = require('./models/restaurant')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-    Todo.find((err, todos) => {
+    Restaurant.find((err, restaurants) => {
         if (err) return console.log(err)
-        return res.render('index', { todos: todos })
+        return res.render('index', { restaurants: restaurants })
     })
 })
 
-app.get('/todos', (req, res) => {
+app.get('/search', (req, res) => {
+    Restaurant.find((err, restaurants) => {
+        const restaurant = restaurants.filter(restaurant => {
+            return restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase())
+        })
+        res.render('index', { restaurants: restaurant,keyword: req.query.keyword })
+    })
+})
+
+app.get('/restaurants', (req, res) => {
     return res.redirect('/')
 })
 
-app.get('/todos/new', (req, res) => {
+app.get('/restaurants/new', (req, res) => {
     res.render('new')
 })
 
-app.post('/todos', (req, res) => {
-    const todo = Todo({
-        name: req.body.name
+app.post('/restaurants', (req, res) => {
+    const restaurant = Restaurant({
+        name: req.body.name,
+        name_en: req.body.name_en,
+        category: req.body.category,
+        image: req.body.image,
+        location: req.body.location,
+        phone: req.body.phone,
+        google_map: req.body.google_map,
+        rating: req.body.rating,
+        description: req.body.description
     })
-    todo.save(err => {
+    restaurant.save(err => {
         if (err) return console.log(err)
         return res.redirect('/')
     })
 })
 
-app.get('/todos/:id', (req, res) => {
-    Todo.findById(req.params.id, (err, todo) => {
+app.get('/restaurants/:id', (req, res) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
-        return res.render('detail', { todo: todo })
+        return res.render('detail', { restaurant: restaurant })
     })
 })
 
-app.get('/todos/:id/edit', (req, res) => {
-    Todo.findById(req.params.id, (err, todo) => {
+app.get('/restaurants/:id/edit', (req, res) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
-        return res.render('edit', { todo: todo })
+        return res.render('edit', { restaurant: restaurant })
     })
 })
 
-app.post('/todos/:id/edit', (req, res) => {
-    Todo.findById(req.params.id, (err, todo) => {
+app.post('/restaurants/:id/edit', (req, res) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
-        todo.name = req.body.name
-        todo.save(err => {
+        restaurant.name = req.body.name
+        restaurant.name_en = req.body.name_en
+        restaurant.category = req.body.category
+        restaurant.image = req.body.image
+        restaurant.location = req.body.location
+        restaurant.phone = req.body.phone
+        restaurant.google_map = req.body.google_map
+        restaurant.rating = req.body.rating
+        restaurant.description = req.body.description
+        restaurant.save(err => {
             if (err) return console.error(err)
-            return res.redirect(`/todos/${req.params.id}`)
+            return res.redirect(`/restaurants/${req.params.id}`)
         })
     })
 })
 
-app.post('/todos/:id/delete', (req, res) => {
-    Todo.findById(req.params.id, (err, todo) => {
+app.post('/restaurants/:id/delete', (req, res) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
-        todo.remove(err => {
+        restaurant.remove(err => {
             if (err) return console.error(err)
             return res.redirect('/')
         })

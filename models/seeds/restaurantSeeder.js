@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const Todo = require('../todo')
+const Restaurant = require('../restaurant')
 
-mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true })
 
 const restaurant = [{
         id: 1,
@@ -110,17 +110,16 @@ db.once('open', () => {
     console.log('db connected!')
 
     for (var i = 0; i < restaurant.length; i++) {
-        Todo.create({
-            id: restaurant.id,
-            name: restaurant.name,
-            name_en: restaurant.name_en,
-            category: restaurant.category,
-            image: restaurant.image,
-            location: restaurant.location,
-            phone: restaurant.phone,
-            google_map: restaurant.google_map,
-            rating: restaurant.rating,
-            description: restaurant.description
+        Restaurant.create({
+            name: restaurant[i].name,
+            name_en: restaurant[i].name_en,
+            category: restaurant[i].category,
+            image: restaurant[i].image,
+            location: restaurant[i].location,
+            phone: restaurant[i].phone,
+            google_map: restaurant[i].google_map,
+            rating: restaurant[i].rating,
+            description: restaurant[i].description
         })
     }
     console.log('done')

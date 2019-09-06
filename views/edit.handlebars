@@ -1,4 +1,49 @@
-<form action="/todos/{{{todo.id}}}/edit" method="POST">
-  <input type="text" name="name" value="{{{todo.name}}}" placeholder="name">
-  <button type="submit">Edit</button>
-</form>
+<div id="addpage">
+  <form action="/restaurants/{{{restaurant.id}}}/edit" method="POST">
+    <h4 class="text-center">請輸入餐廳資訊</h4>
+    <div class="row">
+      <div class="col">
+        <div class="">餐廳名子：<br>
+          <input type="text" name="name" placeholder="name" value="{{{restaurant.name}}}" required>
+        </div>
+        <div class="">餐廳名子(英文)：<br>
+          <input type="text" name="name_en" placeholder="name_english" value="{{{restaurant.name_en}}}">
+        </div>
+        <div class="">餐廳類型：<br>
+          <input type="text" name="category" placeholder="category" value="{{{restaurant.category}}}" required>
+        </div>
+        <div class="">餐廳圖片：<br>
+          <input type="text" name="image" placeholder="image_URL" value="{{{restaurant.image}}}" required>
+        </div>
+      </div>
+      <div class="col">
+        <div class="">餐廳地址：<br>
+          <input type="text" name="location" placeholder="location" value="{{{restaurant.location}}}" required>
+        </div>
+        <div class="">餐廳電話：<br>
+          <input type="text" name="phone" placeholder="phone" value="{{{restaurant.phone}}}" required>
+        </div>
+        <div class="">餐廳地圖連結：<br>
+          <input type="text" name="google_map" placeholder="google_map" value="{{{restaurant.google_map}}}">
+        </div>
+        <div class="">餐廳評價：<br>
+          <input type="number" name="rating" min="0" max="5" step="0.1" placeholder="rating(0~5)"
+            value="{{{restaurant.rating}}}" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">餐廳敘述：<br>
+        <textarea style="width: 100%" rows="8" name="description" placeholder="description"
+          required>{{{restaurant.description}}}</textarea>
+      </div>
+    </div>
+    <div class="row w-100 m-0 mt-3">
+      <div class="col text-right p-0">
+        <button type="submit" class="btn btn-primary" id="newpagebtn">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
+{{!-- <input type="text" name="description" placeholder="description" value="{{{restaurant.description}}}"
+          style="height: 200px" required> --}}

@@ -1,14 +1,41 @@
-<a href="/todos/new">Create</a>
-
-<ul>
-  {{#each todos}}
-  <li>
-    {{{this.name}}}
-    <a href="/todos/{{{this.id}}}">detail</a>
-    <a href="/todos/{{{this.id}}}/edit">edit</a>
-    <form action="/todos/{{{this.id}}}/delete" method="POST" style="display: inline;">
-      <button type="submit">delete</button>
-    </form>
-  </li>
-  {{/each}}
-</ul>
+<div class="container">
+  <!-- search bar -->
+  <div class="row" id="search-bar">
+    <div class="col-12">
+      <h3>尋找餐廳：</h3>
+      <form action="/search">
+        <div class="input-group mb-3 rounded-pill">
+          <input type="text" name="keyword" class="form-control" placeholder="Enter restaurant name to search..."
+            aria-label="restaurant Name..." aria-describedby="search-button" value={{keyword}}>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" id="search-button">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <a href="/restaurants/new" class="btn btn-primary addbtn"><i class="fas fa-plus-square mr-2"></i>Create</a>
+  <!-- restaurant list -->
+  <div class="row" id="data-panel">
+    {{#each restaurants}}
+    <div class="col-sm-4">
+      <a href="/restaurants/{{{this.id}}}" class="text-secondary">
+        <div class="card mb-2">
+          <img class="card-img-top" style="height: 200px;" src="{{ this.image }}" alt="Card image cap">
+          <div class="card-body movie-item-body">
+            <h6 class="card-title">{{ this.name }}</h6>
+            <div><i class="fas fa-utensils mr-2"></i>{{ this.category }}</div>
+            <div class="badge badge-danger"><i class="fas fa-star mr-2"></i>{{ this.rating }}</div>
+          </div>
+          <div class="card-footer">
+            <a href="/restaurants/{{{this.id}}}/edit" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+            <form action="/restaurants/{{{this.id}}}/delete" method="POST" style="display: inline;">
+              <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+            </form>
+          </div>
+        </div>
+      </a>
+    </div>
+    {{/each}}
+  </div>
+</div>
